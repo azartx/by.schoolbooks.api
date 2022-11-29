@@ -13,7 +13,29 @@
     var className = document.getElementById('className').value;
     var url = document.getElementById('url').value;
     var imageUrl = document.getElementById('imageUrl').value;
-    window.location = "localhost/add?id=" + id + "&subjectId=" + subjectId + "&name=" + name + "&author=" + author + "&description=" + description + "&className=" + className + "&url=" + url + "&imageUrl=" + imageUrl;
+
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host;
+
+    var url = baseUrl + "/add?id=" + id + "&subjectId=" + subjectId + "&name=" + name + "&author=" + author + "&description=" + description + "&className=" + className + "&url=" + url + "&imageUrl=" + imageUrl;
+
+
+    fetch(url, {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+
+    if (response.ok) {
+        document.getElementById("myspan").textContent='Success'
+    } else {
+        document.getElementById("myspan").textContent='Error'
+    }
+    });
+
   }
     </script>
 </head>
@@ -27,5 +49,7 @@
 <p>Ссылка на текст <input id="url" type="text"/></p>
 <p>Ссылка на картинку <input id="imageUrl" type="text"/></p>
 <button onclick="sendData()">Добавить</button>
+<br>
+<p><span id="myspan">Status:</span></p>
 </body>
 </html>

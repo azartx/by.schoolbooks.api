@@ -37,8 +37,12 @@ fun Route.addNewBook() {
 
                 call.respond(HttpStatusCode.OK, "Success")
 
-            } catch (e: MissingRequestParameterException) {
-                call.respond(HttpStatusCode.BadRequest, "Some of queries is not sent")
+            } catch (e: Exception) {
+                if (e is MissingRequestParameterException) {
+                    call.respond(HttpStatusCode.BadRequest, "Some of queries is not sent")
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "Bad request data. ${e.message}")
+                }
             }
         }
     }
