@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Добавить новую книгу</title>
+    <script type="text/javascript">
+  function sendData(){
+  	var id = document.getElementById('id').value;
+    var subjectId = document.getElementById('subjectId').value;
+    var name = document.getElementById('name').value;
+    var author = document.getElementById('author').value;
+    var description = document.getElementById('description').value;
+    var className = document.getElementById('className').value;
+    var url = document.getElementById('url').value;
+    var imageUrl = document.getElementById('imageUrl').value;
+    window.location = "localhost/add?id=" + id + "&subjectId=" + subjectId + "&name=" + name + "&author=" + author + "&description=" + description + "&className=" + className + "&url=" + url + "&imageUrl=" + imageUrl;
+  }
+    </script>
+</head>
+<body>
+<p>Айди <input id="id" type="text"/></p>
+<p>Айди предмета <input id="subjectId" type="text"/></p>
+<p>Название <input id="name" type="text"/></p>
+<p>Автор <input id="author" type="text"/></p>
+<p>Описание <input id="description" type="text"/></p>
+<p>Номер класса <input id="className" type="text"/></p>
+<p>Ссылка на текст <input id="url" type="text"/></p>
+<p>Ссылка на картинку <input id="imageUrl" type="text"/></p>
+<button onclick="sendData()">Добавить</button>
+</body>
+</html>
