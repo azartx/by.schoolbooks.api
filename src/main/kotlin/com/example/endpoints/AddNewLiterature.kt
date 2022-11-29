@@ -1,5 +1,6 @@
 package com.example.endpoints
 
+import com.example.db.DatabaseFactory
 import com.example.db.LiteratureTable
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -22,22 +23,23 @@ fun Route.addNewBook() {
                 val imageUrl = getOrFail("imageUrl")
                 val className = getOrFail("className").toInt()
 
-                val lit = LiteratureTable.insert {
-                    it[LiteratureTable.litId] = id
-                    it[LiteratureTable.litName] = name
-                    it[LiteratureTable.litDescription] = description
-                    it[LiteratureTable.litAuthor] = author
-                    it[LiteratureTable.forSubjectId] = subjectId
-                    it[LiteratureTable.litUrl] = url
-                    it[LiteratureTable.litImageUrl] = imageUrl
-                    it[LiteratureTable.litClass] = className
-                }.resultedValues?.firstOrNull()
+                DatabaseFactory.dbQuery {
+                    val lit = LiteratureTable.insert {
+                        it[LiteratureTable.litName] = name
+                        it[LiteratureTable.litDescription] = description
+                        it[LiteratureTable.litAuthor] = author
+                        it[LiteratureTable.forSubjectId] = subjectId
+                        it[LiteratureTable.litUrl] = url
+                        it[LiteratureTable.litImageUrl] = imageUrl
+                        it[LiteratureTable.litClass] = className
+                    }.resultedValues?.firstOrNull()
 
-                println(lit.toString())
-
-                call.respond(HttpStatusCode.OK, "Success")
+                    println(lit.toString())
+                    call.respond(HttpStatusCode.OK, "Success")
+                }
 
             } catch (e: Exception) {
+                e.printStackTrace()
                 if (e is MissingRequestParameterException) {
                     call.respond(HttpStatusCode.BadRequest, "Some of queries is not sent")
                 } else {
